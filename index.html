@@ -31,6 +31,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(8,12,26,.85);
 .nav-links a:hover{color:var(--text)}
 .nav-cta{background:var(--accent);color:#fff;padding:8px 18px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s}
 .nav-cta:hover{background:var(--ah);color:#fff}
+.nav-logo{height:42px;width:auto;flex-shrink:0}
+.footer-logo{height:32px;width:auto}
+.nav-toggle{display:none;all:unset;cursor:pointer;width:40px;height:40px;border-radius:8px;align-items:center;justify-content:center;color:var(--text);font-size:24px;transition:background .2s}
+.nav-toggle:hover{background:rgba(255,255,255,.06)}
 
 /* SECTIONS */
 .sec{max-width:var(--max);margin:0 auto;padding:var(--gap) 32px}
@@ -54,6 +58,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(8,12,26,.85);
 .stat-big{text-align:center;padding:32px 20px}
 .stat-big .num{font-family:var(--font-h);font-size:clamp(40px,6vw,64px);font-weight:700;color:var(--text);line-height:1;margin-bottom:8px}
 .stat-big .lbl{font-size:14px;color:var(--ts);max-width:200px;margin:0 auto;line-height:1.4}
+
+/* GARGALOS GRID */
+.garg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 
 /* EXPANDABLE CARDS */
 .expand-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
@@ -132,13 +139,46 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-@media(max-width:800px){
-  .hero{grid-template-columns:1fr;gap:40px;min-height:auto}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;gap:40px;min-height:auto;padding:130px 28px 64px}
+  .hero-text p{font-size:16px}
   .stats-row{grid-template-columns:1fr}
-  .expand-grid,.svc-grid{grid-template-columns:1fr}
-  .client-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
+  .expand-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:1fr}
+  .client-grid{grid-template-columns:repeat(3,1fr)}
+  .garg-grid{grid-template-columns:repeat(2,1fr)}
+  .sec{padding:clamp(60px,9vw,100px) 28px}
+  .nav-links{position:fixed;top:68px;left:0;right:0;background:rgba(8,12,26,.95);backdrop-filter:blur(14px);flex-direction:column;padding:24px 28px;gap:20px;display:none;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .nav-toggle{display:flex}
   .form-inline{flex-direction:column}
+  .cta-section{padding:60px 28px}
+  footer{padding:32px 28px 24px}
+  .footer-inner{flex-direction:column;text-align:center}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px}
+  .exp-card .ec-plus{width:36px;height:36px;font-size:18px;top:12px;right:12px}
+}
+
+@media(max-width:600px){
+  .hero{padding:110px 20px 48px}
+  .hero-text h1{font-size:clamp(30px,7vw,42px)}
+  .hero-text p{font-size:15px}
+  .hero-clients h3{font-size:12px}
+  .nav-inner{padding:12px 20px}
+  .nav-links{top:60px;padding:20px}
+  .expand-grid{grid-template-columns:1fr}
+  .client-grid{grid-template-columns:repeat(2,1fr)}
+  .garg-grid{grid-template-columns:1fr}
+  .client-badge{padding:18px 14px;min-height:56px;height:56px;border-radius:10px}
+  .client-badge img{height:20px;max-width:100px}
+  .client-badge .cl-arrow{display:none}
+  .sec{padding:56px 20px}
+  .btn{padding:12px 20px;font-size:14px;min-height:44px}
+  .svc-card{padding:28px 20px}
+  .svc-card .svc-title{font-size:20px}
+  .exp-card{padding:22px 18px}
+  .cta-section{padding:56px 20px}
+  footer{padding:28px 20px 20px}
 }
 </style>
 </head>
@@ -148,7 +188,7 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
 <nav>
   <div class="nav-inner">
     <a href="#hero" style="display:flex;align-items:center;text-decoration:none">
-      <svg width="440" height="80" viewBox="0 0 360 140" style="height:80px;width:auto">
+      <svg class="nav-logo" viewBox="0 0 360 140">
         <circle cx="62" cy="44" r="44" fill="none" stroke="#1D4ED8" stroke-width="1.5" opacity="0.2"/>
         <circle cx="62" cy="44" r="34" fill="none" stroke="#2563EB" stroke-width="2" opacity="0.4"/>
         <circle cx="62" cy="44" r="24" fill="none" stroke="#3B82F6" stroke-width="2.5" opacity="0.7"/>
@@ -159,7 +199,8 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
         <line x1="240" y1="22" x2="240" y2="68" stroke="#1E293B" stroke-width="1"/>
       </svg>
     </a>
-    <ul class="nav-links"><li><a href="#servicos">Serviços</a></li><li><a href="#contato">Contato</a></li></ul>
+    <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu"><i class="ph ph-list"></i></button>
+    <ul class="nav-links" id="navMenu"><li><a href="#servicos" onclick="closeMenu()">Serviços</a></li><li><a href="#contato" onclick="closeMenu()">Contato</a></li></ul>
     <a href="#contato" class="nav-cta">Agendar diagnóstico</a>
   </div>
 </nav>
@@ -213,7 +254,7 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
     <p style="text-align:center;font-size:12px;color:var(--ts);margin-bottom:24px">Fonte: Pesquisa Cabeça de Dono — Itaú Empresas + Instituto Locomotiva (2024)</p>
 
     <p style="font-family:var(--font-h);font-size:17px;font-weight:600;color:var(--text);margin-bottom:16px">Isso gera quatro gargalos:</p>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+    <div class="garg-grid">
       <div>
         <i class="ph ph-buildings" style="font-size:20px;color:var(--accent);margin-bottom:8px;display:block"></i>
         <h4 style="font-family:var(--font-h);font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">Conhecimento isolado</h4>
@@ -348,7 +389,7 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <svg width="400" height="80" viewBox="0 0 360 120" style="height:80px;width:auto">
+    <svg class="footer-logo" viewBox="0 0 360 120">
       <circle cx="40" cy="44" r="34" fill="none" stroke="#2563EB" stroke-width="1.5" opacity="0.3"/>
       <circle cx="40" cy="44" r="22" fill="none" stroke="#3B82F6" stroke-width="2" opacity="0.6"/>
       <circle cx="40" cy="44" r="8" fill="#3B82F6"/>
@@ -395,6 +436,8 @@ function openDrawer(id){
 function closeDrawer(){document.getElementById('backdrop').classList.remove('open');document.getElementById('drawer').classList.remove('open')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
 
+function toggleMenu(){document.getElementById('navMenu').classList.toggle('open')}
+function closeMenu(){document.getElementById('navMenu').classList.remove('open')}
 function toggleCard(card){card.classList.toggle('open')}
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
