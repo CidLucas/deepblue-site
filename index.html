@@ -148,8 +148,6 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
   .client-grid{grid-template-columns:repeat(3,1fr)}
   .garg-grid{grid-template-columns:repeat(2,1fr)}
   .sec{padding:clamp(60px,9vw,100px) 28px}
-  .nav-links{position:fixed;top:68px;left:0;right:0;background:rgba(8,12,26,.95);backdrop-filter:blur(14px);flex-direction:column;padding:24px 28px;gap:20px;display:none;border-bottom:1px solid var(--border)}
-  .nav-links.open{display:flex}
   .nav-toggle{display:flex}
   .form-inline{flex-direction:column}
   .cta-section{padding:60px 28px}
@@ -165,7 +163,6 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
   .hero-text p{font-size:15px}
   .hero-clients h3{font-size:12px}
   .nav-inner{padding:12px 20px}
-  .nav-links{top:60px;padding:20px}
   .expand-grid{grid-template-columns:1fr}
   .client-grid{grid-template-columns:repeat(2,1fr)}
   .garg-grid{grid-template-columns:1fr}
@@ -187,6 +184,7 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
+    <button class="nav-toggle" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})" aria-label="Menu"><i class="ph ph-list"></i></button>
     <a href="#hero" style="display:flex;align-items:center;text-decoration:none">
       <svg class="nav-logo" viewBox="0 0 360 140">
         <circle cx="62" cy="44" r="44" fill="none" stroke="#1D4ED8" stroke-width="1.5" opacity="0.2"/>
@@ -199,8 +197,6 @@ footer{background:#060912;border-top:1px solid var(--border);padding:40px 32px 3
         <line x1="240" y1="22" x2="240" y2="68" stroke="#1E293B" stroke-width="1"/>
       </svg>
     </a>
-    <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu"><i class="ph ph-list"></i></button>
-    <ul class="nav-links" id="navMenu"><li><a href="#servicos" onclick="closeMenu()">Serviços</a></li><li><a href="#contato" onclick="closeMenu()">Contato</a></li></ul>
     <a href="#contato" class="nav-cta">Agendar diagnóstico</a>
   </div>
 </nav>
@@ -436,8 +432,6 @@ function openDrawer(id){
 function closeDrawer(){document.getElementById('backdrop').classList.remove('open');document.getElementById('drawer').classList.remove('open')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
 
-function toggleMenu(){document.getElementById('navMenu').classList.toggle('open')}
-function closeMenu(){document.getElementById('navMenu').classList.remove('open')}
 function toggleCard(card){card.classList.toggle('open')}
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
